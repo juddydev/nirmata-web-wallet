@@ -6,7 +6,11 @@ const getAPI = async (req, res) => {
     const requestData = {
       jsonrpc: "2.0",
       id: 0,
-      method: "getblockcount",
+      method: "get_blocks_details",
+      params: {
+        "height_start": 1,
+        "count": 1
+       }
     };
     const response = await axios.post(url, requestData);
     return res.json(response.data);
