@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import LoginPage from "../pages/login";
 import RegisterPage from "../pages/register";
 import MainPage from "../pages/main";
+import CreateWallet from "../pages/createWallet";
 
 const MainRouter = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ const MainRouter = createBrowserRouter([
     {
         path: "/register",
         element: <RegisterPage />,
+    },
+    {
+        path: "/create-wallet",
+        element: <CreateWallet />,
     },
 ]);
 
