@@ -6,7 +6,7 @@ const connectDB = require("./config/db");
 
 // connectDB();
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 const cors = require("cors");
 const mainRouter = require("./src/route/mainRouter");
 

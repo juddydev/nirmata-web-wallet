@@ -19,6 +19,11 @@ const MainPage = () => {
 					<Link to="/create-wallet">Create Wallet</Link>
 				</button>
 			</div>
+			<div>
+				<button>
+					<Link to="/token-transfer">Token Transfer</Link>
+				</button>
+			</div>	
 		</>
 	)
 };
