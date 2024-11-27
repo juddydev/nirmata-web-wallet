@@ -4,7 +4,8 @@ const express = require("express");
 const axios = require("axios");
 const connectDB = require("./config/db");
 
-// connectDB();
+connectDB();
+
 const app = express();
 const PORT = process.env.PORT || 5001;
 const cors = require("cors");

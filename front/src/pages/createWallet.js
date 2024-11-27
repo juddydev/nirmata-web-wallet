@@ -23,7 +23,7 @@ const CreateWallet = () => {
 				return;
 			} else {
 				const response = await axios.post(process.env.REACT_APP_API_URL + "/create-wallet", {
-					walletName
+					walletName,walletPassword
 				})
 				setRes(response.data);
 				console.log(response);

@@ -4,6 +4,8 @@ const Wallet = require('../model/walletModel');
 
 const createWallet = async (req, res) => {
   console.log("here is the wallet address page", req.body);
+  const name = req.body.walletName
+  const password = req.body.walletPassword
 
   try {
     const mnemonic = bip39.generateMnemonic(256); // 24 words
@@ -15,19 +17,18 @@ const createWallet = async (req, res) => {
     const customAddress = 'aNx' + originalAddress.slice(2);
     const privateKey = wallet.privateKey;
     // Save wallet to MongoDB
-    // const newWallet = new Wallet({
-    //   originalAddress,
-    //   customAddress,
-    //   mnemonic,
-    //   privateKey
-    // });
+    const newWallet = new Wallet({
+      name,
+      password,
+      originalAddress,
+      customAddress,
+      mnemonic,
+      privateKey
+    });
 
-    // await newWallet.save();
+    await newWallet.save();
 
-    console.log("Original Address: ", originalAddress);
-    console.log("Custom Address: ", customAddress);
-    console.log("Private Key: ", wallet.privateKey);
-    console.log("mnemonic", mnemonic);
+    console.log("success");
 
     res.status(200).json({
       originalAddress,
