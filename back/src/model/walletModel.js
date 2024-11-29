@@ -6,7 +6,7 @@ const walletSchema = new mongoose.Schema({
     required: true
   },
   password: {
-    type: String,
+    type: Object,
     required: true
   },
   originalAddress: {
@@ -14,17 +14,12 @@ const walletSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  customAddress: {
-    type: String,
-    required: true,
-    unique: true
-  },
   mnemonic: {
-    type: String,
+    type: Object,
     required: true
   },
   privateKey: {
-    type: String,
+    type: Object,
     required: true
   },
   createdAt: {

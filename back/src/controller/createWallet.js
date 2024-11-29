@@ -1,9 +1,18 @@
 const { ethers } = require('ethers');
 const bip39 = require('bip39');
 const Wallet = require('../model/walletModel');
+const crypto = require('crypto');
+
+// Define a secret key and algorithm
+const algorithm = 'aes-256-cbc';
+const secretKey = crypto.randomBytes(32); // Use a secure random key
+const iv = crypto.randomBytes(16);
+
+const encrypt = require('../utils/encrypt')
+const decrypt = require('../utils/decrypt')
 
 const createWallet = async (req, res) => {
-  console.log("here is the wallet address page", req.body);
+  console.log("--create wallet--");
   const name = req.body.walletName
   const password = req.body.walletPassword
 
@@ -12,18 +21,28 @@ const createWallet = async (req, res) => {
     const hdNode = ethers.HDNodeWallet.fromPhrase(mnemonic);
     const wallet = hdNode.connect();
 
-    // Get the original address and replace '0x' with 'anr'
+    // const customAddress = 'aNx' + originalAddress.slice(2);
     const originalAddress = wallet.address;
-    const customAddress = 'aNx' + originalAddress.slice(2);
     const privateKey = wallet.privateKey;
-    // Save wallet to MongoDB
+
+    const encryptedMnemonic = encrypt.encrypt(mnemonic)
+    const encryptedPrivateKey = encrypt.encrypt(privateKey)
+    const encryptedPassword = encrypt.encrypt(password)
+
+    console.log("encryptedMnemonic", encryptedMnemonic);
+
+    // const decryptedMnemonic = decrypt(encryptedMnemonic.encryptedData, encryptedMnemonic.iv);
+    // const decryptedPrivateKey = decrypt(encryptedPrivateKey.encryptedData, encryptedPrivateKey.iv);
+    // const decryptedPassword = decrypt(encryptedPassword.encryptedData, encryptedPassword.iv);
+
+    // console.log("Decrypted Mnemonic:", decryptedMnemonic);
+
     const newWallet = new Wallet({
-      name,
-      password,
-      originalAddress,
-      customAddress,
-      mnemonic,
-      privateKey
+      name: name,
+      password: encryptedPassword,
+      originalAddress: originalAddress,
+      mnemonic: encryptedMnemonic,
+      privateKey: encryptedPrivateKey
     });
 
     await newWallet.save();
@@ -32,7 +51,6 @@ const createWallet = async (req, res) => {
 
     res.status(200).json({
       originalAddress,
-      customAddress,
       mnemonic,
       privateKey
     });

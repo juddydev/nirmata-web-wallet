@@ -23,23 +23,20 @@ const CreateWallet = () => {
 				return;
 			} else {
 				const response = await axios.post(process.env.REACT_APP_API_URL + "/create-wallet", {
-					walletName,walletPassword
+					walletName, walletPassword
 				})
-				setRes(response.data);
+				setRes(response?.data);
 				console.log(response);
 			}
 		};
 	}
 
-	console.log(res);
 	return (
 
 		<div className="flex justify-center  h-screen mx-auto">
 			<div className="flex flex-col w-1/2">
 
 				<h1>Create Wallet</h1>
-
-
 				<div className="flex flex-col gap-2">
 					<p>please input the below contents!</p>
 
@@ -48,7 +45,7 @@ const CreateWallet = () => {
 						<InputTemplate
 							// labelText="Wallet Name"
 							// labelStyle={{ color: "red" }}
-							type="text"	
+							type="text"
 							inputStyle="text-green-500"
 							placeholder="input wallet name"
 							onChange={(e) => setWalletName(e.target.value)}
@@ -90,9 +87,12 @@ const CreateWallet = () => {
 				</div>
 
 				<div className="text-red-500">
-					{res.customAddress}
+					{res.originalAddress}
 				</div>
 				<div className="text-green-500">
+					{res.privateKey}
+				</div>
+				<div className="text-orange-500">
 					{res.mnemonic}
 				</div>
 
